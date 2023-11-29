@@ -1,24 +1,29 @@
 <section class="vh-100" style="background-color: #eee;">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col col-lg-9 col-xl-7">
+            <div class="col col-lg-12 col-xl-12">
                 <div class="card rounded-3">
                     <div class="card-body p-4">
 
-                        <h4 class="text-center my-3 pb-3">To Do App</h4>
+                        <h4 class="text-center my-3 pb-3">Task List App</h4>
 
-                        <form class="row g-3 mb-4 pb-2">
-                            <div class="col-9">
+                        <div class="row g-3 mb-4 pb-2">
+                            <div class="col-8">
                                 <div class="form-outline">
-                                    <input type="text" id="form1" class="form-control" placeholder="Task title" />
+                                    <input type="text" id="taskTitle" class="form-control" placeholder="Task title"
+                                        [(ngModel)]="taskTitle" (ngModelChange)="titleChanged()" />
                                 </div>
                             </div>
 
-                            <div class="col-3 text-end">
-                                <button type="submit" class="btn btn-primary">Add Task</button>
+                            <div class="col-4 btn-group">
+                                <button type="submit" class="btn btn-primary" (click)="addTask()">
+                                    <i class="bi bi-plus-lg"></i>
+                                    Add</button>
+                                <button type="submit" class="btn btn-danger mx-1" (click)="deleteAll()">
+                                    <i class="bi bi-trash3"></i>
+                                    Delete All</button>
                             </div>
-
-                        </form>
+                        </div>
 
                         <table class="table mb-4">
                             <thead>
@@ -30,32 +35,62 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <ng-container *ngIf="tasks.length; else noItemsInTasks">
+                                    <tr *ngFor="let task of tasks; let i = index">
+                                        <th scope="row">{{ i + 1 }}</th>
+                                        <td [ngClass]="{'text-decoration-line-through': task.status == 3}">
+                                            {{ task.title }}
+                                        </td>
+                                        <td>
+                                            <ng-container [ngSwitch]="task.status">
+                                                <span *ngSwitchCase="1" class="text-danger">Pendding</span>
+                                                <span *ngSwitchCase="2" class="text-warning">In Progress</span>
+                                                <span *ngSwitchCase="3" class="text-success">Done!</span>
+                                                <span *ngSwitchDefault class="text-dark">NONE</span>
+                                            </ng-container>
+                                        </td>
+                                        <td>
 
-                                <tr *ngFor="let task of tasks; let i = index">
-                                    <th scope="row">{{i + 1}}</th>
-                                    <td>{{task.title}}</td>
-                                    <td>
-                                        <ng-container [ngSwitch]="task.status">
-                                            <span *ngSwitchCase="1" class="text-danger">Pendding</span>
-                                            <span *ngSwitchCase="2" class="text-warning">In Progress</span>
-                                            <span *ngSwitchCase="3" class="text-success">Done!</span>
-                                            <span *ngSwitchDefault class="text-dark">NONE</span>
-                                        </ng-container>
-                                    </td>
-                                    <td>
-                                        <button *ngIf="task.status == 2" type="button"
-                                            class="btn btn-outline-success mx-1">Finished</button>
+                                            <ng-container [ngSwitch]="task.status">
+                                                <button *ngSwitchCase="1" type="button"
+                                                    class="btn btn-outline-primary mx-1"
+                                                    (click)="changeStatus(task.id, 2)">
+                                                    <i class="bi bi-skip-start-circle"></i>
+                                                </button>
 
-                                        <ng-container *ngIf="task.status == 3; else taskStatusOtherThan3">
-                                            <button type="button" class="btn btn-outline-warning mx-1">Undo</button>
-                                        </ng-container>
+                                                <ng-container *ngSwitchCase="2">
+                                                    <button type="button" class="btn btn-outline-success mx-1"
+                                                        (click)="changeStatus(task.id, 3)">
+                                                        <i class="bi bi-check-lg"></i>
+                                                    </button>
 
-                                        <ng-template #taskStatusOtherThan3>
-                                            <button type="button" class="btn btn-outline-danger">Delete</button>
-                                        </ng-template>
-                                    </td>
-                                </tr>
+                                                    <button type="button" class="btn btn-outline-secondary mx-1"
+                                                        (click)="changeStatus(task.id, 1)">
+                                                        <i class="bi bi-cloud"></i>
+                                                    </button>
+                                                </ng-container>
 
+                                                <button *ngIf="3" type="button" class="btn btn-outline-warning mx-1"
+                                                    (click)="changeStatus(task.id, 2)">
+                                                    <i class="bi bi-x-lg"></i>
+                                                </button>
+                                            </ng-container>
+
+                                            <button type="button" class="btn btn-outline-danger"
+                                                (click)="deleteTask(task.id)">
+                                                <i class="bi bi-trash3"></i>
+                                            </button>
+
+                                        </td>
+                                    </tr>
+                                </ng-container>
+                                <ng-template #noItemsInTasks>
+                                    <tr>
+                                        <td colspan="4">
+                                            <h3 class="text-center">All Tasks Done!</h3>
+                                        </td>
+                                    </tr>
+                                </ng-template>
                             </tbody>
                         </table>
 
