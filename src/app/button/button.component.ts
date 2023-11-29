@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'app-first',
+  selector: 'petro-button',
   standalone: true,
   imports: [CommonModule],
-  templateUrl: './first.component.html'
+  templateUrl: './button.component.html',
+  styleUrl: './button.component.css'
 })
-export class FirstComponent {
+export class ButtonComponent {
 
 }
