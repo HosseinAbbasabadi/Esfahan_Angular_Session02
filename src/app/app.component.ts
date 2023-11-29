@@ -22,7 +22,28 @@ export class AppComponent {
   tasks: Task[] = []
   taskTitle: string = ''
 
+  getList(): Task[] {
+    return [
+      {
+        id: 1,
+        title: 'Wake Up At 07:00',
+        status: 1
+      },
+      {
+        id: 2,
+        title: 'Esfahan Angular Course Session 03',
+        status: 1
+      },
+      {
+        id: 3,
+        title: 'Complete HRM Project',
+        status: 1
+      }
+    ]
+  }
+
   constructor() {
+    this.tasks = this.getList()
   }
 
   addTask() {
@@ -64,8 +85,10 @@ export class AppComponent {
   }
 
   deleteAll() {
-    if (!this.tasks.length) return
+    this.tasks = this.getList()
+  }
 
-    this.tasks = []
+  trackByItems(index: number, task: Task): number {
+    return task.id
   }
 }
