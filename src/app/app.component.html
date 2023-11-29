@@ -30,38 +30,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <th scope="row">1</th>
-                                    <td>Buy groceries for next week</td>
+
+                                <tr *ngFor="let task of tasks; let i = index">
+                                    <th scope="row">{{i + 1}}</th>
+                                    <td>{{task.title}}</td>
                                     <td>
-                                        <span class="text-warning">In progress</span>
+                                        <ng-container [ngSwitch]="task.status">
+                                            <span *ngSwitchCase="1" class="text-danger">Pendding</span>
+                                            <span *ngSwitchCase="2" class="text-warning">In Progress</span>
+                                            <span *ngSwitchCase="3" class="text-success">Done!</span>
+                                            <span *ngSwitchDefault class="text-dark">NONE</span>
+                                        </ng-container>
                                     </td>
                                     <td>
-                                        <button type="submit" class="btn btn-outline-danger">Delete</button>
-                                        <button type="submit" class="btn btn-outline-success ms-1">Finished</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">2</th>
-                                    <td class="text-decoration-line-through">Renew car insurance</td>
-                                    <td>
-                                        <span class="text-success">Done!</span>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-outline-warning">Undo</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">3</th>
-                                    <td>Sign up for online course</td>
-                                    <td>
-                                        <span class="text-warning">In progress</span>
-                                    </td>
-                                    <td>
-                                        <button type="submit" class="btn btn-outline-danger">Delete</button>
-                                        <button type="submit" class="btn btn-outline-success ms-1">Finished</button>
+                                        <button *ngIf="task.status == 2" type="button"
+                                            class="btn btn-outline-success mx-1">Finished</button>
+
+                                        <ng-container *ngIf="task.status == 3; else taskStatusOtherThan3">
+                                            <button type="button" class="btn btn-outline-warning mx-1">Undo</button>
+                                        </ng-container>
+
+                                        <ng-template #taskStatusOtherThan3>
+                                            <button type="button" class="btn btn-outline-danger">Delete</button>
+                                        </ng-template>
                                     </td>
                                 </tr>
+
                             </tbody>
                         </table>
 
