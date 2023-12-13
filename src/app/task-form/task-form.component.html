@@ -1,0 +1,14 @@
+<div class="row g-3 mb-4 pb-2">
+    <div class="col-8">
+        <div class="form-outline">
+            <input type="text" id="taskTitle" class="form-control" placeholder="Task title" [(ngModel)]="taskTitle"
+                (ngModelChange)="titleChanged()" />
+        </div>
+    </div>
+
+    <div class="col-4 btn-group">
+        <app-icon-button label="Add" icon="plus-lg" (clicked)="addTask($event)"></app-icon-button>
+        <app-icon-button label="Clear List" color="danger" icon="trash3" customClass=" mx-1"
+            (clicked)="deleteAll()"></app-icon-button>
+    </div>
+</div>

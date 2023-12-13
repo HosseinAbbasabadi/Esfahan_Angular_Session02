@@ -1,0 +1,56 @@
+<table class="table mb-4">
+    <thead>
+        <tr>
+            <th scope="col">No.</th>
+            <th scope="col">Todo item</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngIf="tasks.length; else noItemsInTasks">
+            <tr *ngFor="let task of tasks; let i = index; trackBy: trackByItems">
+                <th scope="row">{{ i + 1 }}</th>
+                <td [ngClass]="{'text-decoration-line-through': task.status == 3}">
+                    {{ task.title }}
+                </td>
+                <td>
+                    <ng-container [ngSwitch]="task.status">
+                        <span *ngSwitchCase="1" class="text-danger">Pendding</span>
+                        <span *ngSwitchCase="2" class="text-warning">In Progress</span>
+                        <span *ngSwitchCase="3" class="text-success">Done!</span>
+                        <span *ngSwitchDefault class="text-dark">NONE</span>
+                    </ng-container>
+                </td>
+                <td>
+
+                    <ng-container [ngSwitch]="task.status">
+                        <app-icon-button *ngSwitchCase="1" color="outline-primary" icon="skip-start-circle"
+                            customClass=" mx-1" (clicked)="changeStatus(task.id, 2)"></app-icon-button>
+
+                        <ng-container *ngSwitchCase="2">
+                            <app-icon-button color="outline-success" icon="check-lg" customClass=" mx-1"
+                                (clicked)="changeStatus(task.id, 3)"></app-icon-button>
+                            <app-icon-button color="outline-secondary" icon="cloud" customClass=" mx-1"
+                                (clicked)="changeStatus(task.id, 1)"></app-icon-button>
+                        </ng-container>
+
+                        <app-icon-button *ngIf="3" color="outline-warning" icon="x-lg" customClass=" mx-1"
+                            (clicked)="changeStatus(task.id, 2)"></app-icon-button>
+                    </ng-container>
+
+                    <app-icon-button color="outline-danger" icon="trash3" customClass="mx-1"
+                        (clicked)="deleteTask(task.id)"></app-icon-button>
+
+                </td>
+            </tr>
+        </ng-container>
+        <ng-template #noItemsInTasks>
+            <tr>
+                <td colspan="4">
+                    <h3 class="text-center">All Tasks Done!</h3>
+                </td>
+            </tr>
+        </ng-template>
+    </tbody>
+</table>
