@@ -1,7 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { IconButtonComponent } from "../icon-button/icon-button.component";
 import { FormsModule } from '@angular/forms';
 import { Task } from '../Task';
+import { HasPermissionDirective } from '../has-permission.directive';
+import { TaskService } from '../task.service';
 
 @Component({
   selector: 'app-task-form',
@@ -9,11 +11,15 @@ import { Task } from '../Task';
   templateUrl: './task-form.component.html',
   imports: [
     FormsModule,
-    IconButtonComponent]
+    IconButtonComponent,
+    HasPermissionDirective],
 })
 export class TaskFormComponent {
   taskTitle: string = ''
-  @Input({ required: true }) tasks: Task[] = []
+  @Output() onDeleteAllClicked = new EventEmitter()
+
+  constructor(private readonly taskService: TaskService) {
+  }
 
   addTask(event: string) {
     if (!this.taskTitle) {
@@ -21,18 +27,18 @@ export class TaskFormComponent {
       return
     }
 
-    if (this.tasks.find(x => x.title == this.taskTitle)) {
+    if (this.taskService.findBy(this.taskTitle)) {
       alert('Task already defined.')
       return
     }
 
     const task: Task = {
-      id: this.tasks.length + 1,
+      id: this.taskService.length() + 1,
       title: this.taskTitle,
       status: 1
     }
 
-    this.tasks.push(task)
+    this.taskService.add(task)
     this.taskTitle = ''
   }
 
@@ -41,6 +47,7 @@ export class TaskFormComponent {
   }
 
   deleteAll() {
-    this.tasks = []
+    this.taskService.deleteAll()
+    this.onDeleteAllClicked.emit()
   }
 }

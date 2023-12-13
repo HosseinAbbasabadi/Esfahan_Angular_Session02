@@ -1,10 +1,10 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HasPermissionDirective } from '../has-permission.directive';
 
 @Component({
   selector: 'app-icon-button',
   standalone: true,
-  imports: [],
   template: `
     <button [type]="type" class="btn btn-{{color}} {{customClass}}" (click)="onBtnClick()">
       <i class="bi bi-{{icon}}"></i> {{caption}}

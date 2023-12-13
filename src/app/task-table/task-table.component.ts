@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { CommonModule, NgClass, NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { IconButtonComponent } from '../icon-button/icon-button.component';
 import { Task } from '../Task';
+import { HighlightDirective } from '../highlight.directive';
+import { TaskService } from '../task.service';
 
 @Component({
   selector: 'app-task-table',
@@ -13,24 +15,31 @@ import { Task } from '../Task';
     NgSwitch,
     NgSwitchCase,
     NgSwitchDefault,
-    NgClass],
+    NgClass,
+    HighlightDirective],
   templateUrl: './task-table.component.html'
 })
 export class TaskTableComponent {
 
-  @Input({ required: true }) tasks: Task[] = []
+  tasks: Task[] = []
+
+  constructor(private readonly taskService: TaskService) {
+    this.referesh()
+  }
+
+  referesh() {
+    this.tasks = this.taskService.list()
+  }
 
   changeStatus(taskId: number, status: number) {
-    const task = this.tasks.find(x => x.id == taskId)!
+    const task = this.taskService.find(taskId)!
     task.status = status
   }
 
   deleteTask(taskId: number) {
-    const task = this.tasks.find(x => x.id == taskId)!
-    if (confirm(`Do you want to delete ${task.title}`) == true) {
-      const index = this.tasks.indexOf(task)
-      this.tasks.splice(index, 1)
-    }
+    const task = this.taskService.find(taskId)!
+    if (confirm(`Do you want to delete ${task.title}`) == true)
+      this.taskService.delete(task)
   }
 
   trackByItems(index: number, task: Task): number {
