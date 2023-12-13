@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Task } from './Task';
 import { NgClass, NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { IconButtonComponent } from './icon-button/icon-button.component';
 
 @Component({
   selector: 'app-root',
@@ -13,7 +14,9 @@ import { FormsModule } from '@angular/forms';
     NgSwitchCase,
     NgSwitchDefault,
     NgClass,
-    FormsModule],
+    FormsModule,
+    IconButtonComponent
+  ],
   templateUrl: './app.component.html'
 })
 export class AppComponent {

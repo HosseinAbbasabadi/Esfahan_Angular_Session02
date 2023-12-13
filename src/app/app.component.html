@@ -16,12 +16,17 @@
                             </div>
 
                             <div class="col-4 btn-group">
-                                <button type="submit" class="btn btn-primary" (click)="addTask()">
+
+                                <app-icon-button label="Add" icon="plus-lg"></app-icon-button>
+                                <app-icon-button label="Clear List" color="danger" icon="trash3"
+                                    customClass=" mx-1"></app-icon-button>
+
+                                <!-- <button type="submit" class="btn btn-primary" (click)="addTask()">
                                     <i class="bi bi-plus-lg"></i>
                                     Add</button>
                                 <button type="submit" class="btn btn-danger mx-1" (click)="deleteAll()">
                                     <i class="bi bi-trash3"></i>
-                                    Delete All</button>
+                                    Delete All</button> -->
                             </div>
                         </div>
 
