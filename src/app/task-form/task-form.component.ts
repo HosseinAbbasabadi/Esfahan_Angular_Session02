@@ -9,6 +9,7 @@ import { TaskService } from '../task.service';
   selector: 'app-task-form',
   standalone: true,
   templateUrl: './task-form.component.html',
+  //providers: [TaskService],
   imports: [
     FormsModule,
     IconButtonComponent,

@@ -8,6 +8,7 @@ import { TaskService } from '../task.service';
 @Component({
   selector: 'app-task-table',
   standalone: true,
+  //providers: [TaskService],
   imports: [
     IconButtonComponent,
     NgFor,
