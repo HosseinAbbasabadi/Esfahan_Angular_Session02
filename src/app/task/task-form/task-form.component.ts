@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IconButtonComponent } from "../icon-button/icon-button.component";
+import { IconButtonComponent } from "../../icon-button/icon-button.component";
 import { FormsModule } from '@angular/forms';
 import { Task } from '../Task';
-import { HasPermissionDirective } from '../has-permission.directive';
+import { HasPermissionDirective } from '../../has-permission.directive';
 import { TaskService } from '../task.service';
 
 @Component({
@@ -50,5 +50,10 @@ export class TaskFormComponent {
   deleteAll() {
     this.taskService.deleteAll()
     this.onDeleteAllClicked.emit()
+  }
+
+  addToLocalStorage() {
+    const name = 'hossein'
+    localStorage.setItem('name', name)
   }
 }

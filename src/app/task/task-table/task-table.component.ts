@@ -1,8 +1,8 @@
-import { Component, Input } from '@angular/core';
-import { CommonModule, NgClass, NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
-import { IconButtonComponent } from '../icon-button/icon-button.component';
+import { Component } from '@angular/core';
+import { NgClass, NgFor, NgIf, NgSwitch, NgSwitchCase, NgSwitchDefault } from '@angular/common';
+import { IconButtonComponent } from '../../icon-button/icon-button.component';
 import { Task } from '../Task';
-import { HighlightDirective } from '../highlight.directive';
+import { HighlightDirective } from '../../highlight.directive';
 import { TaskService } from '../task.service';
 
 @Component({

@@ -8,7 +8,9 @@
 
     <div class="col-4 btn-group">
         <app-icon-button label="Add" icon="plus-lg" (clicked)="addTask($event)"></app-icon-button>
-        <app-icon-button label="Clear List" color="danger" icon="trash3" customClass=" mx-1"
+        <app-icon-button label="Clear List" color="danger" icon="trash3" customClass="mx-1"
             (clicked)="deleteAll()"></app-icon-button>
+        <app-icon-button label="Add To LS" color="primary" icon="trash3" customClass="mx-1"
+            (clicked)="addToLocalStorage()"></app-icon-button>
     </div>
 </div>
